@@ -1,0 +1,87 @@
+{
+  "profile": {
+    "name": "Pranay Patel",
+    "role": "Full Stack Developer",
+    "tagline": "Building Digital Solutions.",
+    "description": "I build scalable, responsive and user-friendly web applications that solve real-world problems and deliver meaningful digital experiences.",
+    "image": "/uploads/profile_1788438206803.jpeg",
+    "availability": true
+  },
+  "projects": [
+    {
+      "title": "Playmate",
+      "subtitle": "Sports Venue Booking & Community Platform",
+      "description": "A comprehensive platform for discovering and booking sports venues, managing team activities, and building a community of sports enthusiasts. Features real-time booking, payment processing via Razorpay, and community feeds.",
+      "image": "/uploads/project_1788438811945.png",
+      "tags": [
+        "Flutter",
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "MySQL",
+        "Firebase",
+        "Razorpay"
+      ],
+      "liveUrl": "",
+      "codeUrl": "https://github.com/PatelPranay92/PlayMate",
+      "featured": true
+    },
+    {
+      "title": "Amarjyot Timber",
+      "subtitle": "B2B Wood Processing Corporate Website",
+      "description": "A professional corporate website for a wood processing company, featuring product catalogs, inquiry forms with automated email notifications, and a responsive design optimized for B2B clients.",
+      "image": "/uploads/project_1788438893273.png",
+      "tags": [
+        "Next.js",
+        "React.js",
+        "Node.js",
+        "Nodemailer"
+      ],
+      "liveUrl": "https://amarjyot-timber.vercel.app/",
+      "codeUrl": "",
+      "featured": true
+    },
+    {
+      "title": "Prescripto",
+      "subtitle": "Doctor Appointment Booking System",
+      "description": "Designed a secure appointment system using the MERN stack with JWT authentication, REST APIs, payment gateway\nintegration, and Tailwind CSS interfaces for patients, doctors, and admins. ",
+      "image": "/uploads/project_1788439920687.png",
+      "tags": [
+        "MongoDB",
+        "Express JS",
+        "React JS",
+        "Node JS",
+        "Socket.IO and Tailwind CSS."
+      ],
+      "liveUrl": "https://prescripto-one-theta.vercel.app/",
+      "codeUrl": "https://github.com/PatelPranay92/Prescripto",
+      "featured": true
+    },
+    {
+      "title": "Jobcard",
+      "subtitle": " AUTOMOBILE SERVICE MANAGEMENT SYSTEM | MERN",
+      "description": "Built a full-stack service center platform to streamline vehicle repair tracking, customer records, and\nbilling.\nImplemented role-based authentication (Admin/User) and dynamic receipt generation for printing job\ncards and invoices.\nDeveloped REST APIs for job card management, vehicle models, parts, labor, and payment tracking using\nNode.js, Express.js, and MongoDB.",
+      "image": "/uploads/project_1788440321284.png",
+      "tags": [
+        "React.js",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Vite",
+        "Bootstrap",
+        "Axios",
+        "REST APIs."
+      ],
+      "liveUrl": "https://job-card-xqpy.vercel.app/",
+      "codeUrl": "https://github.com/PatelPranay92/Job-card",
+      "featured": true
+    }
+  ],
+  "social": {
+    "email": "patelpranay2004@gmail.com",
+    "github": "https://github.com/PatelPranay92",
+    "linkedin": "https://www.linkedin.com/in/pranaypatel92/",
+    "location": "Gandhinagar, Gujarat, India"
+  },
+  "resume": "/uploads/resume_1788438412131.pdf"
+}
