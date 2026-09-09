@@ -1,7 +1,5 @@
-import fs from 'fs';
-import path from 'path';
-
-const dataFilePath = path.join(process.cwd(), 'data', 'portfolio.json');
+import dbConnect from './mongodb';
+import Portfolio from '@/models/Portfolio';
 
 export interface Profile {
   name: string;
@@ -37,13 +35,35 @@ export interface PortfolioData {
   resume: string;
 }
 
-export function getPortfolioData(): PortfolioData {
+export async function getPortfolioData(): Promise<PortfolioData> {
   try {
-    const fileContents = fs.readFileSync(dataFilePath, 'utf8');
-    return JSON.parse(fileContents) as PortfolioData;
+    await dbConnect();
+    let portfolio = await Portfolio.findOne({});
+
+    if (!portfolio) {
+      console.log('No portfolio data found in DB, creating empty default...');
+      const defaultData: PortfolioData = {
+        profile: { name: '', role: '', tagline: '', description: '', image: '', availability: true },
+        projects: [],
+        social: { email: '', github: '', linkedin: '', location: '' },
+        resume: ''
+      };
+
+      portfolio = new Portfolio(defaultData);
+      await portfolio.save();
+    }
+
+    // Convert mongoose document to standard object
+    const data = portfolio.toObject() as any;
+    return {
+      profile: data.profile,
+      projects: data.projects,
+      social: data.social,
+      resume: data.resume || ''
+    };
   } catch (error) {
     console.error("Error reading portfolio data:", error);
-    // Return default empty state if file read fails
+    // Return default empty state if db read fails
     return {
       profile: { name: '', role: '', tagline: '', description: '', image: '', availability: true },
       projects: [],
@@ -53,9 +73,21 @@ export function getPortfolioData(): PortfolioData {
   }
 }
 
-export function savePortfolioData(data: PortfolioData): boolean {
+export async function savePortfolioData(data: PortfolioData): Promise<boolean> {
   try {
-    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), 'utf8');
+    await dbConnect();
+    let portfolio = await Portfolio.findOne({});
+    
+    if (!portfolio) {
+      portfolio = new Portfolio(data);
+    } else {
+      portfolio.profile = data.profile;
+      portfolio.projects = data.projects as any;
+      portfolio.social = data.social;
+      portfolio.resume = data.resume;
+    }
+    
+    await portfolio.save();
     return true;
   } catch (error) {
     console.error("Error saving portfolio data:", error);

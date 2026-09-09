@@ -7,8 +7,8 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { getPortfolioData } from "@/lib/db";
 
-export default function Home() {
-  const data = getPortfolioData();
+export default async function Home() {
+  const data = await getPortfolioData();
 
   return (
     <>

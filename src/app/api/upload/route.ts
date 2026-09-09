@@ -1,41 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import dbConnect from '@/lib/mongodb';
+import Upload from '@/models/Upload';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const formData = await request.formData();
-    const file = formData.get('file') as File | null;
+    await dbConnect();
+    
+    const formData = await req.formData();
+    const file = formData.get('file') as File;
     const type = formData.get('type') as string | null;
-
+    
     if (!file) {
-      return NextResponse.json({ success: false, message: 'No file provided' }, { status: 400 });
+      return NextResponse.json({ success: false, message: 'No file received' }, { status: 400 });
     }
-
-    const buffer = Buffer.from(await file.arrayBuffer());
     
-    // We'll put uploads in /public/uploads/
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
     
-    // Ensure dir exists
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
+    const base64Data = buffer.toString('base64');
+    const filename = `${type || 'upload'}_${file.name}`;
+    const contentType = file.type;
 
-    // Give it a unique name
-    const ext = path.extname(file.name);
-    const filename = `${type || 'upload'}_${Date.now()}${ext}`;
-    const filePath = path.join(uploadDir, filename);
-
-    fs.writeFileSync(filePath, buffer);
-
-    return NextResponse.json({ 
-      success: true, 
-      url: `/uploads/${filename}` 
+    const newUpload = new Upload({
+      filename,
+      contentType,
+      data: `data:${contentType};base64,${base64Data}`
     });
 
-  } catch (error) {
-    console.error("Upload error:", error);
-    return NextResponse.json({ success: false, message: 'Upload failed' }, { status: 500 });
+    await newUpload.save();
+    return NextResponse.json({ 
+      success: true, 
+      message: 'File uploaded successfully',
+      fileId: newUpload._id,
+      url: `data:${contentType};base64,${base64Data}`
+    }, { status: 201 });
+    
+  } catch (error: any) {
+    console.error('Error uploading file:', error);
+    return NextResponse.json({ success: false, message: error.message || 'Error uploading file' }, { status: 500 });
   }
 }
