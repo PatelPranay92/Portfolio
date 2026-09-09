@@ -7,6 +7,9 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { getPortfolioData } from "@/lib/db";
 
+// Render at request time so the page always fetches fresh data from MongoDB
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const data = await getPortfolioData();
 

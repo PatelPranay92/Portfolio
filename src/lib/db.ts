@@ -53,13 +53,13 @@ export async function getPortfolioData(): Promise<PortfolioData> {
       await portfolio.save();
     }
 
-    // Convert mongoose document to standard object
-    const data = portfolio.toObject() as any;
+    // Deep-serialize to plain object — strips Mongoose _id ObjectIds
+    const raw = JSON.parse(JSON.stringify(portfolio.toObject()));
     return {
-      profile: data.profile,
-      projects: data.projects,
-      social: data.social,
-      resume: data.resume || ''
+      profile: { name: raw.profile.name, role: raw.profile.role, tagline: raw.profile.tagline, description: raw.profile.description, image: raw.profile.image, availability: raw.profile.availability },
+      projects: raw.projects.map((p: any) => ({ title: p.title, subtitle: p.subtitle, description: p.description, image: p.image, tags: p.tags, liveUrl: p.liveUrl, codeUrl: p.codeUrl, featured: p.featured })),
+      social: { email: raw.social.email, github: raw.social.github, linkedin: raw.social.linkedin, location: raw.social.location },
+      resume: raw.resume || ''
     };
   } catch (error) {
     console.error("Error reading portfolio data:", error);
