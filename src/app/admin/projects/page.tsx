@@ -210,7 +210,7 @@ export default function ProjectsAdmin() {
                     {uploading ? "Uploading..." : "Upload Image"}
                     <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} disabled={uploading} />
                   </label>
-                  <span className="text-xs text-text-secondary flex-1 truncate">{formData.image || "No image uploaded"}</span>
+                  {/* <span className="text-xs text-text-secondary flex-1 truncate">{formData.image || "No image uploaded"}</span> */}
                 </div>
               </div>
 

@@ -79,10 +79,10 @@ export default function ResumeAdmin() {
         <h2 className="text-xl font-bold text-text-primary mb-2">Current Resume</h2>
         {resumePath ? (
           <div className="mb-8">
-            <p className="text-text-secondary mb-4">
+            {/* <p className="text-text-secondary mb-4">
               Your resume is currently available at: <br/>
               <code className="bg-surface px-2 py-1 rounded text-sm mt-2 inline-block">{resumePath}</code>
-            </p>
+            </p> */}
             <a 
               href={resumePath} 
               target="_blank" 

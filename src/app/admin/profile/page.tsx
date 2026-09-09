@@ -101,7 +101,7 @@ export default function ProfileAdmin() {
                   {uploading ? "Uploading..." : "Upload New Image"}
                   <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} disabled={uploading} />
                 </label>
-                <span className="text-xs text-text-secondary flex-1 truncate">{profile.image || "No image uploaded"}</span>
+                {/* <span className="text-xs text-text-secondary flex-1 truncate">{profile.image || "No image uploaded"}</span> */}
               </div>
             </div>
 
